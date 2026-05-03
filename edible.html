@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nama Microgreens</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+
+  <div class="logo-container">
+    <img src="logo nama.jpg" alt="NAMA MICROGREENS">
+  </div>
+  <div class="logo-text">MICROGREENS</div>
+</div>
+
+<nav>
+<a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
+<a href="index.html" class="nav-active">Home</a>
+<a href="about.html"  class="nav-noact">About</a>
+<a href="products.html" class="nav-noact">Product</a>
+<a href="order.html" class="nav-noact">Order</a>
+<a href="contact.html" class="nav-noact">Contact</a>
+<a href="login.html" class="nav-noact">My Account</a>
+<a href="login.html" class="nav-noact">Login</a>
+</nav>
+
+</header>
+
+<div id="cartDrawer" class="cart-overlay">
+    <div class="cart-header">
+        <h3>Cart 🌿</h3>
+        <span class="close-cart" onclick="toggleCart()">Close</span>
+    </div>
+    <div id="cartItemsList" class="cart-items-container">
+    </div>
+    <div class="cart-footer">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold; font-size:1.2rem;">
+            <span>Total:</span>
+            <span id="cartGrandTotal">₱0</span>
+        </div>
+        <button class="checkout-btn" onclick="window.location.href='order.html'">Proceed to Checkout</button>
+    </div>
+</div>
+
+<section class="hero-banner">
+  <div class="hero-text">
+    <h1>Delivering premium urban crops <br> with absolute freshness.</h1>
+    <p>Sustainably grown microgreens and edible flowers, <br> harvested right in the heart of the city.</p>
+    <a href="products.html" class="btn-shop">Shop Fresh!</a>
+  </div>
+
+  <div class="image-gallery">
+    <div class="float-box top">
+      <img src="namaflo.jpg" alt="Microgreens 1">
+    </div>
+    <div class="float-box bottom">
+      <img src="namades.jpg" alt="Microgreens 2">
+    </div>
+    <div class="float-box top">
+      <img src="namaflor.jpg" alt="Microgreens 3">
+    </div>
+  </div>
+</section>
+
+<section class="sidebar-layout">
+
+
+<div class="sidebar">
+
+<h3>Product Categories</h3>
+<br>
+  <a href="microgreens.html">Microgreens</a><br>
+  <a href="leafy.html">Leafy Herbs</a><br>
+  <p>Edible Flower</p>
+  <a href="bundle.html">Bundle Packs</a>
+</div>
+
+
+<div class="products">
+
+<div class="card">
+ <div class="product-img"><img src="namaa1.png" alt="Melampodium"></div>
+  <h4>Melampodium</h4>
+  <p class="product-desc">
+    Commonly known as Butter Daisy, these vibrant yellow blooms offer a mild, slightly nutty flavor with a crisp texture. They are prized in pastry arts for their ability to maintain their bright color when used as a fresh garnish on cakes and chilled desserts.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    Store in a rigid, airtight container lined with a dry paper towel to prevent bruising. Keep in the vegetable crisper at 4°C to 7°C. Best used within 3 days for maximum visual impact.
+  </div>
+  <p>₱50</p>
+ <button class="btn" onclick="addToCart('Melampodium', 50)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="edisul.png" alt="Sulfur"></div>
+  <h4>Sulfur Cosmos</h4>
+  <p class="product-desc">
+    These fiery orange and yellow petals possess a subtle herbal scent and a flavor profile similar to mango or citrus. Research indicates they are rich in lutein and various antioxidant compounds, making them as nutritious as they are aesthetically striking.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    Very sensitive to ethylene gas; keep away from ripening fruits like bananas. Store in a sealed container with a light mist of water on a paper towel to maintain petal turgidity.
+  </div>
+  <p>₱50</p>
+ <button class="btn" onclick="addToCart('Sulfur Cosmos', 50)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="edivio.png" alt="Viola"></div>
+  <h4>Viola</h4>
+  <p class="product-desc">
+    Violas are celebrated for their sweet, velvet-like texture and a mild wintergreen flavor. They contain high amounts of salicylic acid (the natural precursor to aspirin) and are frequently used in salads, cocktails, or crystallized in sugar for decorations.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    Maintain high humidity but avoid direct water contact on the petals. Store in the original packaging or an airtight container. These are hardy but should be kept away from the back of the fridge.
+  </div>
+  <p>₱40</p>
+<button class="btn" onclick="addToCart('Viola', 40)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="edipeas.png" alt="Blue"></div>
+  <h4>Blue Peas</h4>
+  <p class="product-desc">
+    Scientifically known as *Clitoria ternatea*, these flowers are famous for their deep blue pigment (anthocyanins). While the flavor is mild and earthy, they are primarily used as a natural food colorant that changes from blue to purple when exposed to acidity.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    Can be stored fresh in the fridge for 5 days or air-dried for long-term use in teas. If fresh, keep in a container with a dry towel to absorb excess moisture that causes pigment bleeding.
+  </div>
+  <p>₱70</p>
+ <button class="btn" onclick="addToCart('Blue Peas', 70)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="edicad.png" alt="Cadena"></div>
+  <h4>Cadena De Amor</h4>
+  <p class="product-desc">
+    Also known as Coral Vine, these delicate pink clusters have a mild, bean-like taste. They are a traditional source of snacks in some cultures when dipped in batter and fried, though they are most stunning when draped over fresh salads or cold platters.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    These wilt very quickly once harvested. Keep the stems slightly damp and store in a sealed plastic bag within the refrigerator. Consume within 48 hours for the best quality and appearance.
+  </div>
+  <p>₱50</p>
+ <button class="btn" onclick="addToCart('Cadena De Amor', 50)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="edipen.png" alt="Pentas"></div>
+  <h4>Pentas</h4>
+  <p class="product-desc">
+    Pentas produce small, star-shaped flowers that grow in clusters. They have a very clean, neutral flavor, making them the perfect "all-purpose" edible flower for any dish where you want a pop of color without altering the taste of the primary ingredients.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    Store the entire cluster together until ready to plate. Keep in a cool, dark environment. To revive slightly wilted Pentas, float the blossoms in ice-cold water for 15 minutes before use.
+  </div>
+  <p>₱60</p>
+ <button class="btn" onclick="addToCart('Pentas', 60)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="edizin.png" alt="Zini"></div>
+  <h4>Zinnia</h4>
+  <p class="product-desc">
+    Zinnias offer a slightly bitter, spicy flavor profile. Because the petals are tougher and more fibrous than most edible flowers, they stand up well to being tossed in heavy dressings or used as a base garnish for warm (but not hot) appetizers.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    One of the most durable edible flowers. They can handle slightly more airflow than violas. Store in a container with a single layer of paper towel at standard refrigeration temperatures.
+  </div>
+  <p>₱40</p>
+ <button class="btn" onclick="addToCart('Zinnia', 40)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="ediamar.png" alt="Globe"></div>
+  <h4>Globe Amaranth</h4>
+  <p class="product-desc">
+    Recognized by their clover-like, papery texture, Globe Amaranths have a faint beet-like flavor. They are unique because they retain their shape and color even when dried, making them excellent for hot tea infusions or decorative toppings.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    To keep fresh, store in a sealed container. However, if they begin to dry out, they can be fully dehydrated and stored in a glass jar at room temperature for several months without losing color.
+  </div>
+  <p>₱55</p>
+ <button class="btn" onclick="addToCart('Globe Amaranth', 55)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="edimari.png" alt="Mari"></div>
+  <h4>Marigold</h4>
+  <p class="product-desc">
+    Often called the "poor man's saffron," Marigolds provide a pungent, citrusy, and slightly spicy flavor. They are rich in carotenoids like zeaxanthin, which are essential for eye health. Use individual petals to scatter over rice, soups, or salads.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    Store whole heads in a container. To use, pull petals from the base. Avoid consuming the green calyx (base), as it is very bitter. Keep refrigerated in a moisture-balanced environment.
+  </div>
+  <p>₱40</p>
+ <button class="btn" onclick="addToCart('Marigold', 40)">Add to Cart</button>
+</div>
+
+<div class="card">
+ <div class="product-img"><img src="edimax.png" alt="Mexican"></div>
+  <h4>Mexican Sunflower</h4>
+  <p class="product-desc">
+    *Tithonia rotundifolia* features thick, velvety petals with an earthy, honey-like aroma. These large blooms are high-impact garnishes. The petals are dense and hold up remarkably well when placed atop creamy soups or fatty meat dishes.
+  </p>
+  <div class="care-section">
+    <strong>Maintenance</strong>
+    Due to their size and weight, store them face-down on a soft paper towel to prevent the stem base from crushing the delicate petal tips. Maintain a strict cold chain to prevent the oils in the petals from turning.
+  </div>
+  <p>₱80</p>
+ <button class="btn" onclick="addToCart('Mexican Sunflower', 80)">Add to Cart</button>
+</div>
+
+</div>
+
+</section>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('namaCart')) || [];
+
+    function toggleCart() {
+        document.getElementById('cartDrawer').classList.toggle('active');
+        renderCart();
+    }
+
+    function addToCart(name, price) {
+        const item = cart.find(i => i.name === name);
+        if (item) {
+            item.quantity += 1;
+        } else {
+            cart.push({ name: name, price: price, quantity: 1 });
+        }
+        updateAndSave();
+        document.getElementById('cartDrawer').classList.add('active');
+    }
+
+    function changeQty(index, amount) {
+        cart[index].quantity += amount;
+        if (cart[index].quantity <= 0) {
+            cart.splice(index, 1); 
+        }
+        updateAndSave();
+    }
+    function updateAndSave() {
+        localStorage.setItem('namaCart', JSON.stringify(cart));
+        renderCart();
+    }
+    function renderCart() {
+        const list = document.getElementById('cartItemsList');
+        const countBadge = document.getElementById('cart-count');
+        const totalDisp = document.getElementById('cartGrandTotal');
+        
+        list.innerHTML = '';
+        let total = 0;
+        let count = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            count += item.quantity;
+
+            list.innerHTML += `
+                <div class="cart-item">
+                    <div><strong>${item.name}</strong><br>₱${item.price}</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                    <div style="text-align:right">₱${itemTotal}</div>
+                </div>
+            `;
+        });
+
+        countBadge.innerText = count;
+        totalDisp.innerText = '₱' + total;
+    }
+    window.onload = renderCart;
+</script>
+
+<footer class="footer">
+    <div class="footer-col">
+        <h4>About Nama</h4>
+        <p>Providing fresh, nutrient-dense microgreens and edible flowers harvested daily in Metro Manila. We bring farm-fresh health directly to your table.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Our Products</h4>
+        <ul>
+            <li><a href="microgreens.html">Microgreens</a></li>
+            <li><a href="leafy.html">Leafy Herbs</a></li>
+            <li><a href="edible.html">Edible Flower</a></li>
+            <li><a href="bundle.html">Bundle Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Nama Microgreens. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

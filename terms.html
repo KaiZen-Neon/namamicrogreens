@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nama Microgreens</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(90deg, #6b8f4e, #7da866, #96b97b);
+        }
+        .legal-content h2 {
+            color: #3d6b3d;
+            margin-top: 25px;
+            font-size: 1.5rem;
+        }
+
+        .legal h2 {
+            color: #3d6b3d;
+            margin-top: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+        }
+
+        .legal-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        .legal-content li {
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .story-wrapper {
+            padding: 50px;
+            margin-top: 200px; 
+            margin-bottom: 5%;
+            position: relative;
+            z-index: 5;
+            border-radius: 9px;
+}
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo-container">
+        <img src="logo nama.jpg" alt="NAMA MICROGREENS">
+    </div>
+    <div class="logo-text">MICROGREENS</div>
+    <nav>
+        <a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
+        <a href="index.html" class="nav-noact">Home</a>
+        <a href="about.html" class="nav-noact">About</a>
+        <a href="products.html" class="nav-noact">Product</a>
+        <a href="order.html" class="nav-noact">Order</a>
+        <a href="contact.html" class="nav-noact">Contact</a>
+        <a href="myaccount.html" class="nav-noact">My Account</a>
+        <a href="login.html" class="nav-noact">Login</a>
+    </nav>
+</header>
+
+<div id="cartDrawer" class="cart-overlay">
+    <div class="cart-header">
+        <h3>Cart 🌿</h3>
+        <span class="close-cart" onclick="toggleCart()">Close</span>
+    </div>
+    <div id="cartItemsList" class="cart-items-container"></div>
+    <div class="cart-footer">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold; font-size:1.2rem;">
+            <span>Total:</span>
+            <span id="cartGrandTotal">₱0</span>
+        </div>
+        <button class="checkout-btn" onclick="window.location.href='order.html'">Proceed to Checkout</button>
+    </div>
+</div>
+
+<div class="about-header-strip">
+    <h1>Terms & Conditions</h1>
+</div>
+
+    <div class="story-wrapper">
+        <div class="story-card legal">
+            <p>By using the <strong>Nama Microgreens</strong> website, you agree to comply with and be bound by the following terms and conditions. Please read them carefully before placing an order.</p>
+
+            <h2>1. Use of Website</h2>
+            <p>While using this site, you agree to:</p>
+            <ul>
+                <li>Provide accurate, current, and complete information during checkout or registration.</li>
+                <li>Not use the site for any fraudulent or illegal activities.</li>
+                <li>Not attempt to harm, hack, or interfere with the security of the website.</li>
+            </ul>
+
+            <h2>2. Products and Orders</h2>
+            <ul>
+                <li>All products are subject to availability based on harvest cycles.</li>
+                <li>Prices for our microgreens and flowers may change without prior notice.</li>
+                <li>We reserve the right to cancel or refuse any order if we suspect an error in pricing or availability.</li>
+            </ul>
+
+            <h2>3. Payments</h2>
+            <p>All payments (GCash or other digital methods) must be successfully completed and verified before your order enters the processing and harvest stage.</p>
+
+            <h2>4. Delivery</h2>
+            <ul>
+                <li>Delivery times may vary depending on your specific location within our service areas.</li>
+                <li>While we strive for punctuality, delays may occur due to unforeseen circumstances like weather or traffic.</li>
+            </ul>
+
+            <h2>5. Returns and Refunds</h2>
+            <ul>
+                <li>Due to the perishable nature of our products, microgreens and edible flowers are <strong>not eligible for return</strong> once delivered.</li>
+                <li>Any issues regarding quality or damage must be reported within <strong>24 hours</strong> of receipt with photo evidence.</li>
+            </ul>
+
+            <h2>6. Intellectual Property</h2>
+            <p>All website content, including text, custom graphics, product images, and the Nama Microgreens logo, is the property of Nama Microgreens and may not be used or copied without written permission.</p>
+
+            <h2>7. Limitation of Liability</h2>
+            <p>We are not liable for:</p>
+            <ul>
+                <li>Temporary website downtime or technical glitches.</li>
+                <li>Minor product variations (size/color) which are natural in fresh crops.</li>
+                <li>Delays caused by third-party delivery partners.</li>
+            </ul>
+
+            <h2>8. Changes to Terms</h2>
+            <p>We may update these terms at any time to reflect our growing business. Continued use of the site after changes are posted constitutes your acceptance of the new terms.</p>
+            
+            <p style="font-size: 0.85rem; color: #777; border-top: 1px solid #eee; margin-top: 30px; padding-top: 15px;">
+                Last Updated: October 2026
+            </p>
+        </div>
+    </div>
+</body>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('namaCart')) || [];
+
+    function toggleCart() {
+        document.getElementById('cartDrawer').classList.toggle('active');
+        renderCart();
+    }
+
+    function updateAndSave() {
+        localStorage.setItem('namaCart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    function changeQty(index, amount) {
+        cart[index].quantity += amount;
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
+        updateAndSave();
+    }
+
+    function renderCart() {
+        const list = document.getElementById('cartItemsList');
+        const countBadge = document.getElementById('cart-count');
+        const totalDisp = document.getElementById('cartGrandTotal');
+        list.innerHTML = '';
+        let total = 0; let count = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal; count += item.quantity;
+            list.innerHTML += `
+                <div class="cart-item">
+                    <div><strong>${item.name}</strong><br>₱${item.price}</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                    <div style="text-align:right">₱${itemTotal}</div>
+                </div>`;
+        });
+        countBadge.innerText = count;
+        totalDisp.innerText = '₱' + total;
+    }
+    window.onload = renderCart;
+</script>
+
+<footer class="footer">
+    <div class="footer-col">
+        <h4>About Nama</h4>
+        <p>Providing fresh, nutrient-dense microgreens and edible flowers harvested daily in Metro Manila. We bring farm-fresh health directly to your table.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Our Products</h4>
+        <ul>
+            <li><a href="microgreens.html">Microgreens</a></li>
+            <li><a href="leafy.html">Leafy Herbs</a></li>
+            <li><a href="edible.html">Edible Flower</a></li>
+            <li><a href="bundle.html">Bundle Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Nama Microgreens. All Rights Reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

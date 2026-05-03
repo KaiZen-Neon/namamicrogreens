@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nama Microgreens</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cloudflare.com">
+<style>
+body {
+   background: linear-gradient(90deg, #6b8f4e, #7da866, #96b97b);
+}
+.contact-info h3 {
+    font-size: 24px;   
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+}
+
+
+.contact-info p {
+    font-size: 18px;      
+    margin: 5px 0;        
+    line-height: 1.6;     
+}
+
+
+.contact-info p strong {
+    font-size: 20px;    
+}
+</style>
+
+</head>
+<body>
+
+<header class="header">
+
+  <div class="logo-container">
+    <img src="logo nama.jpg" alt="NAMA MICROGREENS">
+  </div>
+  <div class="logo-text">MICROGREENS</div>
+</div>
+
+
+<nav>
+<a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
+<a href="index.html" class="nav-noact">Home</a>
+<a href="about.html"  class="nav-noact">About</a>
+<a href="products.html" class="nav-noact">Product</a>
+<a href="order.html" class="nav-noact">Order</a>
+<a href="contact.html" class="nav-active">Contact</a>
+<a href="login.html" class="nav-noact">My Account</a>
+<a href="login.html" class="nav-noact">Login</a>
+</nav>
+</header>
+
+<div id="cartDrawer" class="cart-overlay">
+    <div class="cart-header">
+        <h3>Cart 🌿</h3>
+        <span class="close-cart" onclick="toggleCart()">Close</span>
+    </div>
+    <div id="cartItemsList" class="cart-items-container">
+    </div>
+    <div class="cart-footer">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold; font-size:1.2rem;">
+            <span>Total:</span>
+            <span id="cartGrandTotal">₱0</span>
+        </div>
+        <button class="checkout-btn" onclick="window.location.href='order.html'">Proceed to Checkout</button>
+    </div>
+</div>
+
+<div class="about-header-strip">
+    <h1>Contact Us</h1>
+</div>
+
+<section class="contact-container">
+    <div class="contact-form">
+        <form action="#">
+            <input type="text" placeholder="Complete Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="tel" placeholder="Phone Number">
+            <input type="text" placeholder="Subject">
+            <textarea placeholder="Your Message" rows="8"></textarea>
+            <button type="submit" class="send-btn">Send Message</button>
+        </form>
+    </div>
+
+    <div class="contact-info">
+        <div class="info-item">
+            <i class="fa-solid fa-house"></i>
+            <div>
+                <h3>LOCATIONS</h3>
+                <p><strong>Nama Microgreens Headquarters</strong></p>
+                <p>500 Santol St., Sta. Mesa, Manila</p>
+                <p>Contact: 0917 899 7088</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+                <h3>E-MAIL</h3>
+                <p>For partnerships and collaboration: namamicrogreens@gmail.com</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+                <h3>PHONE</h3>
+                <p>0917 899 7088</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+   
+
+</body>
+</html>
+<script>
+    let cart = JSON.parse(localStorage.getItem('namaCart')) || [];
+
+    function toggleCart() {
+        document.getElementById('cartDrawer').classList.toggle('active');
+        renderCart();
+    }
+
+    function addToCart(name, price) {
+        const item = cart.find(i => i.name === name);
+        if (item) {
+            item.quantity += 1;
+        } else {
+            cart.push({ name: name, price: price, quantity: 1 });
+        }
+        updateAndSave();
+        document.getElementById('cartDrawer').classList.add('active');
+    }
+
+    function changeQty(index, amount) {
+        cart[index].quantity += amount;
+        if (cart[index].quantity <= 0) {
+            cart.splice(index, 1); 
+        }
+        updateAndSave();
+    }
+    function updateAndSave() {
+        localStorage.setItem('namaCart', JSON.stringify(cart));
+        renderCart();
+    }
+    function renderCart() {
+        const list = document.getElementById('cartItemsList');
+        const countBadge = document.getElementById('cart-count');
+        const totalDisp = document.getElementById('cartGrandTotal');
+        
+        list.innerHTML = '';
+        let total = 0;
+        let count = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            count += item.quantity;
+
+            list.innerHTML += `
+                <div class="cart-item">
+                    <div><strong>${item.name}</strong><br>₱${item.price}</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                    <div style="text-align:right">₱${itemTotal}</div>
+                </div>
+            `;
+        });
+
+        countBadge.innerText = count;
+        totalDisp.innerText = '₱' + total;
+    }
+    window.onload = renderCart;
+</script>
+
+<footer class="footer">
+    <div class="footer-col">
+        <h4>About Nama</h4>
+        <p>Providing fresh, nutrient-dense microgreens and edible flowers harvested daily in Metro Manila. We bring farm-fresh health directly to your table.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Our Products</h4>
+        <ul>
+            <li><a href="microgreens.html">Microgreens</a></li>
+            <li><a href="leafy.html">Leafy Herbs</a></li>
+            <li><a href="edible.html">Edible Flower</a></li>
+            <li><a href="bundle.html">Bundle Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Nama Microgreens. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

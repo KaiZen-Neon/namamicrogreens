@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nama Microgreens</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+body {
+   background: linear-gradient(90deg, #6b8f4e, #7da866, #96b97b);
+}
+</style>
+
+</head>
+<body>
+
+<header class="header">
+
+  <div class="logo-container">
+    <img src="logo nama.jpg" alt="NAMA MICROGREENS">
+  </div>
+  <div class="logo-text">MICROGREENS</div>
+</div>
+
+
+<nav>
+<a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
+<a href="index.html" class="nav-noact">Home</a>
+<a href="about.html"  class="nav-active">About</a>
+<a href="products.html" class="nav-noact">Product</a>
+<a href="order.html" class="nav-noact">Order</a>
+<a href="contact.html" class="nav-noact">Contact</a>
+<a href="login.html" class="nav-noact">My Account</a>
+<a href="login.html" class="nav-noact">Login</a>
+</nav>
+</header>
+
+<div id="cartDrawer" class="cart-overlay">
+    <div class="cart-header">
+        <h3>Cart 🌿</h3>
+        <span class="close-cart" onclick="toggleCart()">Close</span>
+    </div>
+    <div id="cartItemsList" class="cart-items-container">
+    </div>
+    <div class="cart-footer">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold; font-size:1.2rem;">
+            <span>Total:</span>
+            <span id="cartGrandTotal">₱0</span>
+        </div>
+        <button class="checkout-btn" onclick="window.location.href='order.html'">Proceed to Checkout</button>
+    </div>
+</div>
+
+<div class="about-header-strip">
+    <h1>About Us</h1>
+</div>
+
+<section class="about-hero-image">
+</section>
+
+<div class="story-wrapper">
+    <div class="story-card">
+        <h2>Our Story</h2>
+        <p>We are an urban agriculture social enterprise that grows fresh, sustainable crops right in the heart of the city. By utilizing innovative farming techniques, we produce high-quality microgreens, edible flowers and herbs that reduce food miles, promote local sourcing, and support healthier communities. Our mission is to make fresh, nutritious food accessible while transforming underused urban spaces into thriving green hubs for the city.</p>
+        <br>
+        <p>By collaborating with our local partner farm, we leverage indoor farming and horticular techniques to supply over 250 restaurants, hotels, cafes, and culinary schools across Metro Manila and nearby provinces. Additionally, Nama Urban Farm provides training and support to groups of displaced mothers, helping them gain skills and empower themselves in the field of agriculture.</p>
+        <br><h2>Why Microgreens</h2>
+        <p>Microgreens because they are highly nutritious, containing concentrated vitamins, minerals, and antioxidants that support a healthier lifestyle. They are also fast-growing and sustainable, making them ideal for urban farming where space and resources are limited. By growing microgreens locally, the business reduces food miles and ensures that customers receive fresher, higher-quality produce. Additionally, microgreens offer versatility in culinary use, making them valuable for both professional chefs and everyday home cooking.</p>
+        <br><h2>How it works</h2>
+        <p>Microgreens are grown by planting seeds in a controlled environment where they receive the right amount of light, water, and nutrients. Within a short period, usually 7–14 days, the young plants reach their peak stage where they are rich in flavor and nutrients. They are carefully harvested just above the soil level to preserve their freshness and quality. After harvesting, the microgreens are immediately prepared for delivery or use, ensuring they remain fresh, safe, and ready for consumption.</p>
+        <br><h2>Sustainability Practices</h2>
+        <p>Nama Microgreens follows sustainable farming practices by growing crops in controlled urban environments that use less water and space compared to traditional agriculture. By producing food locally, the business reduces transportation distance, helping lower carbon emissions and ensuring fresher products. The use of efficient indoor farming techniques minimizes waste and maximizes resource use. In addition, the company supports community development by empowering local groups and promoting environmentally responsible food production.</p>
+    
+    
+    
+    </div>
+</div>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('namaCart')) || [];
+
+    function toggleCart() {
+        document.getElementById('cartDrawer').classList.toggle('active');
+        renderCart();
+    }
+
+    function addToCart(name, price) {
+        const item = cart.find(i => i.name === name);
+        if (item) {
+            item.quantity += 1;
+        } else {
+            cart.push({ name: name, price: price, quantity: 1 });
+        }
+        updateAndSave();
+        document.getElementById('cartDrawer').classList.add('active');
+    }
+
+    function changeQty(index, amount) {
+        cart[index].quantity += amount;
+        if (cart[index].quantity <= 0) {
+            cart.splice(index, 1); 
+        }
+        updateAndSave();
+    }
+    function updateAndSave() {
+        localStorage.setItem('namaCart', JSON.stringify(cart));
+        renderCart();
+    }
+    function renderCart() {
+        const list = document.getElementById('cartItemsList');
+        const countBadge = document.getElementById('cart-count');
+        const totalDisp = document.getElementById('cartGrandTotal');
+        
+        list.innerHTML = '';
+        let total = 0;
+        let count = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            count += item.quantity;
+
+            list.innerHTML += `
+                <div class="cart-item">
+                    <div><strong>${item.name}</strong><br>₱${item.price}</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                    <div style="text-align:right">₱${itemTotal}</div>
+                </div>
+            `;
+        });
+
+        countBadge.innerText = count;
+        totalDisp.innerText = '₱' + total;
+    }
+    window.onload = renderCart;
+</script>
+
+<footer class="footer">
+    <div class="footer-col">
+        <h4>About Nama</h4>
+        <p>Providing fresh, nutrient-dense microgreens and edible flowers harvested daily in Metro Manila. We bring farm-fresh health directly to your table.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Our Products</h4>
+        <ul>
+            <li><a href="microgreens.html">Microgreens</a></li>
+            <li><a href="leafy.html">Leafy Herbs</a></li>
+            <li><a href="edible.html">Edible Flower</a></li>
+            <li><a href="bundle.html">Bundle Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Nama Microgreens. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

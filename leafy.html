@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nama Microgreens</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+
+  <div class="logo-container">
+    <img src="logo nama.jpg" alt="NAMA MICROGREENS">
+  </div>
+  <div class="logo-text">MICROGREENS</div>
+</div>
+
+<nav>
+<a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
+<a href="index.html" class="nav-active">Home</a>
+<a href="about.html"  class="nav-noact">About</a>
+<a href="products.html" class="nav-noact">Product</a>
+<a href="order.html" class="nav-noact">Order</a>
+<a href="contact.html" class="nav-noact">Contact</a>
+<a href="login.html" class="nav-noact">My Account</a>
+<a href="login.html" class="nav-noact">Login</a>
+</nav>
+
+</header>
+
+<div id="cartDrawer" class="cart-overlay">
+    <div class="cart-header">
+        <h3>Cart 🌿</h3>
+        <span class="close-cart" onclick="toggleCart()">Close</span>
+    </div>
+    <div id="cartItemsList" class="cart-items-container">
+    </div>
+    <div class="cart-footer">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold; font-size:1.2rem;">
+            <span>Total:</span>
+            <span id="cartGrandTotal">₱0</span>
+        </div>
+        <button class="checkout-btn" onclick="window.location.href='order.html'">Proceed to Checkout</button>
+    </div>
+</div>
+
+<section class="hero-banner">
+  <div class="hero-text">
+    <h1>Delivering premium urban crops <br> with absolute freshness.</h1>
+    <p>Sustainably grown microgreens and edible flowers, <br> harvested right in the heart of the city.</p>
+    <a href="products.html" class="btn-shop">Shop Fresh!</a>
+  </div>
+
+  <div class="image-gallery">
+    <div class="float-box top">
+      <img src="namaflo.jpg" alt="Microgreens 1">
+    </div>
+    <div class="float-box bottom">
+      <img src="namades.jpg" alt="Microgreens 2">
+    </div>
+    <div class="float-box top">
+      <img src="namaflor.jpg" alt="Microgreens 3">
+    </div>
+  </div>
+</section>
+
+<section class="sidebar-layout">
+
+<div class="sidebar">
+
+<h3>Product Categories</h3>
+<br>
+  <a href="microgreens.html" class="nav-noact">Microgreens</a><br>
+  <p>Leafy Herbs</p>
+  <a href="edible.html" class="nav-noact">Edible Flower</a><br>
+  <a href="bundle.html" class="nav-noact">Bundle Packs</a>
+</div>
+
+
+<div class="products">
+
+<div class="card">
+    <div class="product-img"><img src="namaalef.png" alt="Gotu Kola"></div>
+    <h4>Gotu Kola</h4>
+    <p class="product-desc">
+        A staple of Ayurvedic medicine, this "herb of longevity" has a mild, mineral-rich taste with a slightly bitter finish. High in Vitamin C and Calcium.
+    </p>
+    <div class="care-section">
+        <strong>Maintenance</strong>
+        Store in a shallow, unsealed container in the fridge. For maximum potency, consume within 5-7 days. Avoid direct contact with freezer walls.
+    </div>
+    <p>₱45</p>
+    <button class="btn" onclick="addToCart('Gotu Kola', 45)">Add to Cart</button>
+</div>
+
+<div class="card">
+    <div class="product-img"><img src="herbpansi.png" alt="Pansit-Pansitan"></div>
+    <h4>Pansit-Pansitan</h4>
+    <p class="product-desc">
+        Known as *Peperomia pellucida*, these succulent leaves offer a crisp, cool texture similar to celery. Traditionally used for its anti-inflammatory benefits.
+    </p>
+    <div class="care-section">
+        <strong>Maintenance</strong>
+        Sensitive to heat. Wrap loosely in a damp paper towel and refrigerate. Do not wash until right before you eat to prevent wilting.
+    </div>
+    <p>₱50</p>
+    <button class="btn" onclick="addToCart('Pansit-Pansitan', 50)">Add to Cart</button>
+</div>
+
+<div class="card">
+    <div class="product-img"><img src="herbred.png" alt="Red Veined Sorrel"></div>
+    <h4>Red Veined Sorrel</h4>
+    <p class="product-desc">
+        Prized by chefs for its striking red veins and sharp, citrusy tang. Contains high levels of Vitamin A and oxalic acid, which provides its signature tartness.
+    </p>
+    <div class="care-section">
+        <strong>Maintenance</strong>
+        Very delicate leaves. Store in an airtight container with a dry paper towel to manage moisture. Best kept at a consistent 4°C (39°F).
+    </div>
+    <p>₱65</p>
+    <button class="btn" onclick="addToCart('Red Veined Sorrel', 65)">Add to Cart</button>
+</div>
+</div>
+
+</section>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('namaCart')) || [];
+
+    function toggleCart() {
+        document.getElementById('cartDrawer').classList.toggle('active');
+        renderCart();
+    }
+
+    function addToCart(name, price) {
+        const item = cart.find(i => i.name === name);
+        if (item) {
+            item.quantity += 1;
+        } else {
+            cart.push({ name: name, price: price, quantity: 1 });
+        }
+        updateAndSave();
+        document.getElementById('cartDrawer').classList.add('active');
+    }
+
+    function changeQty(index, amount) {
+        cart[index].quantity += amount;
+        if (cart[index].quantity <= 0) {
+            cart.splice(index, 1); 
+        }
+        updateAndSave();
+    }
+    function updateAndSave() {
+        localStorage.setItem('namaCart', JSON.stringify(cart));
+        renderCart();
+    }
+    function renderCart() {
+        const list = document.getElementById('cartItemsList');
+        const countBadge = document.getElementById('cart-count');
+        const totalDisp = document.getElementById('cartGrandTotal');
+        
+        list.innerHTML = '';
+        let total = 0;
+        let count = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            count += item.quantity;
+
+            list.innerHTML += `
+                <div class="cart-item">
+                    <div><strong>${item.name}</strong><br>₱${item.price}</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                    <div style="text-align:right">₱${itemTotal}</div>
+                </div>
+            `;
+        });
+
+        countBadge.innerText = count;
+        totalDisp.innerText = '₱' + total;
+    }
+    window.onload = renderCart;
+</script>
+
+<footer class="footer">
+    <div class="footer-col">
+        <h4>About Nama</h4>
+        <p>Providing fresh, nutrient-dense microgreens and edible flowers harvested daily in Metro Manila. We bring farm-fresh health directly to your table.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Our Products</h4>
+        <ul>
+            <li><a href="microgreens.html">Microgreens</a></li>
+            <li><a href="leafy.html">Leafy Herbs</a></li>
+            <li><a href="edible.html">Edible Flower</a></li>
+            <li><a href="bundle.html">Bundle Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Nama Microgreens. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

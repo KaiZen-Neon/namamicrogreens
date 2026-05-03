@@ -3,8 +3,10 @@
 <head>
 <title>Nama Microgreens</title>
 <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
+
 
 <header class="header">
 
@@ -16,12 +18,12 @@
 
 <nav>
 <a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
-<a href="index.html" class="nav-active">Home</a>
+<a href="index.html" class="nav-noact">Home</a>
 <a href="about.html"  class="nav-noact">About</a>
-<a href="products.html" class="nav-noact">Product</a>
+<a href="products.html" class="nav-active">Product</a>
 <a href="order.html" class="nav-noact">Order</a>
 <a href="contact.html" class="nav-noact">Contact</a>
-<a href="myaccount.html" class="nav-noact">My Account</a>
+<a href="login.html" class="nav-noact">My Account</a>
 <a href="login.html" class="nav-noact">Login</a>
 </nav>
 
@@ -43,41 +45,11 @@
     </div>
 </div>
 
-<section class="hero-banner">
-  <div class="hero-text">
-    <h1>Delivering premium urban crops <br> with absolute freshness.</h1>
-    <p>Sustainably grown microgreens and edible flowers, <br> harvested right in the heart of the city.</p>
-    <a href="products.html" class="btn-shop">Shop Fresh!</a>
-  </div>
-
-  <div class="image-gallery">
-    <div class="float-box top">
-      <img src="namaflo.jpg" alt="Microgreens 1">
-    </div>
-    <div class="float-box bottom">
-      <img src="namades.jpg" alt="Microgreens 2">
-    </div>
-    <div class="float-box top">
-      <img src="namaflor.jpg" alt="Microgreens 3">
-    </div>
-  </div>
-</section>
-
-<section class="sidebar-layout">
-
-<div class="sidebar">
-
-<h3>Product Categories</h3>
-<br>
-  <a href="microgreens.html">Microgreens</a><br>
-  <a href="leafy.html">Leafy Herbs</a><br>
-  <a href="edible.html">Edible Flower</a><br>
-  <a href="bundle.html">Bundle Packs</a>
-</div>
-
+<h2 class="category-label">Microgreens</h2>
+    
 <div class="products">
 
-<div class="card">
+<div class="cards">
  <div class="product-img"><img src="microalfa.png" alt="Alfaalfa"></div>
   <h4>AlfaAlfa</h4>
   <p class="product-desc">
@@ -119,7 +91,7 @@
   <button class="btn" onclick="addToCart('Basil', 55)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="cards">
  <div class="product-img"><img src="microbroco.png" alt="Broccoli"></div>
   <h4>Broccoli</h4>
   <p class="product-desc">
@@ -161,7 +133,7 @@
   <button class="btn" onclick="addToCart('Cilantro', 35)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="cards">
  <div class="product-img"><img src="microredama.png" alt="Red Amaranth"></div>
   <h4>Red Amaranth</h4>
   <p class="product-desc">
@@ -203,7 +175,7 @@
   <button class="btn" onclick="addToCart('Red Mustard', 45)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="cards">
  <div class="product-img"><img src="microdun.png" alt="Dun Peas"></div>
   <h4>Dun Peas</h4>
   <p class="product-desc">
@@ -245,7 +217,7 @@
  <button class="btn" onclick="addToCart('Mitzuna', 50)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="cards">
  <div class="product-img"><img src="microrad.png" alt="Radish"></div>
   <h4>Radish Kaiware</h4>
   <p class="product-desc">
@@ -287,7 +259,10 @@
  <button class="btn" onclick="addToCart('Purple Radish', 45)">Add to Cart</button>
 </div>
 
-<div class="card">
+<h2 class="category-label">Leafy Herbs</h2><br>
+<div class="products"></div>
+
+<div class="cards">
     <div class="product-img"><img src="namaalef.png" alt="Gotu Kola"></div>
     <h4>Gotu Kola</h4>
     <p class="product-desc">
@@ -329,7 +304,10 @@
     <button class="btn" onclick="addToCart('Red Veined Sorrel', 65)">Add to Cart</button>
 </div>
 
-<div class="card">
+<h2 class="category-label">Edible Flower</h2><br>
+<div class="products"></div>
+
+<div class="cards">
  <div class="product-img"><img src="namaa1.png" alt="Melampodium"></div>
   <h4>Melampodium</h4>
   <p class="product-desc">
@@ -371,7 +349,7 @@
 <button class="btn" onclick="addToCart('Viola', 40)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="cards">
  <div class="product-img"><img src="edipeas.png" alt="Blue"></div>
   <h4>Blue Peas</h4>
   <p class="product-desc">
@@ -413,7 +391,7 @@
  <button class="btn" onclick="addToCart('Pentas', 60)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="cards">
  <div class="product-img"><img src="edizin.png" alt="Zini"></div>
   <h4>Zinnia</h4>
   <p class="product-desc">
@@ -455,7 +433,7 @@
  <button class="btn" onclick="addToCart('Marigold', 40)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="cards">
  <div class="product-img"><img src="edimax.png" alt="Mexican"></div>
   <h4>Mexican Sunflower</h4>
   <p class="product-desc">
@@ -468,6 +446,7 @@
   <p>₱80</p>
  <button class="btn" onclick="addToCart('Mexican Sunflower', 80)">Add to Cart</button>
 </div>
+
 </div>
 
 </section>

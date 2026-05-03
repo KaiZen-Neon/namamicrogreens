@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nama Microgreens</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .container { display: flex; gap: 40px; font-family: sans-serif; justify-content: center; margin-top: 65px; margin-bottom: 100px; }
+        .box { border: 1px solid #ddd; padding: 20px; width: 400px; background: #fff; border-radius: 8px; }
+        .auth-btn { background: #7ba25c; color: white; padding: 10px 20px; border: none; cursor: pointer; width: 100%; font-size: 1rem; margin-top: 10px; }
+        .auth-btn:hover { background: #6a8d4f; }
+        .show-pass-container { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; margin-bottom: 15px; cursor: pointer; color: #666; }
+        .show-pass-container input { width: auto; margin: 0; cursor: pointer; }
+
+    </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo-container">
+    <img src="logo nama.jpg" alt="NAMA MICROGREENS">
+  </div>
+  <div class="logo-text">MICROGREENS</div>
+
+  <nav>
+    <a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
+    <a href="index.html" class="nav-noact">Home</a>
+    <a href="about.html" class="nav-noact">About</a>
+    <a href="products.html" class="nav-noact">Product</a>
+    <a href="order.html" class="nav-noact">Order</a>
+    <a href="contact.html" class="nav-noact">Contact</a>
+    <a href="myaccount.html" class="nav-noact">My Account</a>
+    <a href="login.html" class="nav-active">Login</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="box">
+    <h2>Login</h2>
+    <label>Username or Email address *</label><br>
+    <input type="text" id="loginUser" style="width:100%; margin-bottom:10px;"><br>
+    
+    <label>Password *</label><br>
+    <input type="password" id="loginPass" style="width:100%; margin-bottom:5px;">
+    
+    <label class="show-pass-container">
+        <input type="checkbox" onclick="togglePass('loginPass')"> Show Password
+    </label>
+    
+    <button onclick="handleLogin()" class="auth-btn">Log in</button>
+  </div>
+
+  <div class="box">
+    <h2>Register</h2>
+    <label>Email address *</label><br>
+    <input type="email" id="regUser" style="width:100%; margin-bottom:10px;"><br>
+    
+    <label>Create Password *</label><br>
+    <input type="password" id="regPass" style="width:100%; margin-bottom:5px;">
+    
+    <label class="show-pass-container">
+        <input type="checkbox" onclick="togglePass('regPass')"> Show Password
+    </label>
+    
+    <p style="font-size: 12px; color: #666;">Create a secure password to protect your account.</p>
+    <button onclick="handleRegister()" class="auth-btn">Register</button>
+  </div>
+</div>
+
+<script>
+
+  function togglePass(id) {
+    const x = document.getElementById(id);
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
+  function validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  function handleRegister() {
+    const email = document.getElementById('regUser').value.trim();
+    const pass = document.getElementById('regPass').value.trim(); 
+    let users = JSON.parse(localStorage.getItem('namaUsers')) || [];
+
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    if (pass.length < 4) {
+      alert("Password must be at least 4 characters long.");
+      return;
+    }
+
+    const userExists = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (userExists) {
+      alert("This email is already registered.");
+      return;
+    }
+
+    users.push({ email: email, password: pass, username: "", fullName: "", phone: "" });
+    localStorage.setItem('namaUsers', JSON.stringify(users));
+    alert("Registration successful! You can now log in.");
+    location.reload();
+  }
+
+  function handleLogin() {
+    const loginInput = document.getElementById('loginUser').value.trim().toLowerCase();
+    const pass = document.getElementById('loginPass').value.trim();
+    let users = JSON.parse(localStorage.getItem('namaUsers')) || [];
+
+    const userMatch = users.find(u => 
+        u.email.toLowerCase() === loginInput || 
+        (u.username && u.username.toLowerCase() === loginInput)
+    );
+
+    if (!userMatch) {
+      alert("Account not found. Please register first.");
+      return;
+    }
+
+    if (userMatch.password === pass) {
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('username', userMatch.email); 
+      alert('Login Success! Welcome back.');
+      window.location.href = 'myaccount.html';
+    } else {
+      alert("Incorrect password. Please try again.");
+    }
+  }
+
+  let cart = JSON.parse(localStorage.getItem('namaCart')) || [];
+
+  function toggleCart() {
+    const drawer = document.getElementById('cartDrawer');
+    if(drawer) drawer.classList.toggle('active');
+    renderCart();
+  }
+
+  function renderCart() {
+    const list = document.getElementById('cartItemsList');
+    const countBadge = document.getElementById('cart-count');
+    const totalDisp = document.getElementById('cartGrandTotal');
+    if (!list) return;
+    list.innerHTML = '';
+    let total = 0; let count = 0;
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal; count += item.quantity;
+      list.innerHTML += `<div class="cart-item"><div><strong>${item.name}</strong><br>₱${item.price}</div><div style="text-align:right">₱${itemTotal}</div></div>`;
+    });
+    if(countBadge) countBadge.innerText = count;
+    if(totalDisp) totalDisp.innerText = '₱' + total;
+  }
+  window.onload = renderCart;
+</script>
+<footer class="footer">
+    <div class="footer-col">
+        <h4>About Nama</h4>
+        <p>Providing fresh, nutrient-dense microgreens and edible flowers harvested daily in Metro Manila. We bring farm-fresh health directly to your table.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Our Products</h4>
+        <ul>
+            <li><a href="microgreens.html">Microgreens</a></li>
+            <li><a href="leafy.html">Leafy Herbs</a></li>
+            <li><a href="edible.html">Edible Flower</a></li>
+            <li><a href="bundle.html">Bundle Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Nama Microgreens. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
+

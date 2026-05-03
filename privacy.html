@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nama Microgreens</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(90deg, #6b8f4e, #7da866, #96b97b);
+        }
+
+        .legal-content h2 {
+            color: #3d6b3d;
+            margin-top: 25px;
+            font-size: 1.5rem;
+        }
+
+        .legal-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        .legal-content li {
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .story-wrapper {
+            padding: 50px;
+            margin-top: 200px; 
+            margin-bottom: 5%;
+            position: relative;
+            z-index: 5;
+            border-radius: 9px;
+}
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo-container">
+        <img src="logo nama.jpg" alt="NAMA MICROGREENS">
+    </div>
+    <div class="logo-text">MICROGREENS</div>
+    <nav>
+        <a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
+        <a href="index.html" class="nav-noact">Home</a>
+        <a href="about.html" class="nav-noact">About</a>
+        <a href="products.html" class="nav-noact">Product</a>
+        <a href="order.html" class="nav-noact">Order</a>
+        <a href="contact.html" class="nav-noact">Contact</a>
+        <a href="myaccount.html" class="nav-noact">My Account</a>
+        <a href="login.html" class="nav-noact">Login</a>
+    </nav>
+</header>
+
+<div id="cartDrawer" class="cart-overlay">
+    <div class="cart-header">
+        <h3>Cart 🌿</h3>
+        <span class="close-cart" onclick="toggleCart()">Close</span>
+    </div>
+    <div id="cartItemsList" class="cart-items-container"></div>
+    <div class="cart-footer">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold; font-size:1.2rem;">
+            <span>Total:</span>
+            <span id="cartGrandTotal">₱0</span>
+        </div>
+        <button class="checkout-btn" onclick="window.location.href='order.html'">Proceed to Checkout</button>
+    </div>
+</div>
+
+<div class="about-header-strip">
+    <h1>Privacy Policy</h1>
+</div>
+
+<div class="story-wrapper">
+    <div class="story-card legal-content">
+        <p>At <strong>Nama Microgreens</strong>, we value your privacy and are committed to protecting your personal information. This policy outlines how we handle the data you provide while using our services.</p>
+
+        <h2>1. Information We Collect</h2>
+        <p>In order to provide our fresh urban crops to you, we may collect the following:</p>
+        <ul>
+            <li>Personal details: Name, email address, and phone number.</li>
+            <li>Logistics info: Delivery and billing addresses.</li>
+            <li>Transaction info: Order history and purchase details.</li>
+            <li>Technical data: Website usage data (cookies, browser info).</li>
+        </ul>
+
+        <h2>2. How We Use Your Information</h2>
+        <p>Your data allows us to maintain the quality of our farm-to-table service:</p>
+        <ul>
+            <li>To process, fulfill, and deliver your orders accurately.</li>
+            <li>To communicate with you regarding your orders or inquiries.</li>
+            <li>To improve our website performance and overall customer experience.</li>
+            <li>To send optional updates or promotions regarding our harvests.</li>
+        </ul>
+
+        <h2>3. Sharing of Information</h2>
+        <p>We respect your data. <strong>We do NOT sell your personal data to third parties.</strong> We only share information with trusted partners necessary for our operations:</p>
+        <ul>
+            <li><strong>Delivery Services:</strong> For shipping and logistics.</li>
+            <li><strong>Payment Providers:</strong> For secure transaction processing.</li>
+        </ul>
+
+        <h2>4. Data Protection</h2>
+        <p>We take reasonable and appropriate technical and organizational steps to protect your data from unauthorized access, alteration, or misuse. Our systems are designed to keep your personal and transaction history secure.</p>
+        
+     <h2>5. YOUR RIGHTS</h2>
+            <p>We believe you should have control over your data. Regarding your personal information, you may:</p>
+            <ul>
+                <li><strong>Request access:</strong> Obtain a copy of the data we hold about you.</li>
+                <li><strong>Request corrections:</strong> Ask us to update or fix any inaccurate information.</li>
+                <li><strong>Request deletion:</strong> Ask us to remove your data from our active systems.</li>
+                <li><strong>Opt-out:</strong> Unsubscribe from marketing messages or promotional updates at any time.</li>
+            </ul>
+
+            <h2>6. CHANGES TO THIS POLICY</h2>
+            <p>We may update this Privacy Policy from time to time to reflect changes in our harvests or legal requirements. Any updates will be posted directly on this page, and we encourage you to review it periodically.</p>
+            
+            <br>
+            <p style="font-size: 0.85rem; color: #777; border-top: 1px solid #eee; margin-top: 20px;">
+                Last Updated: October 2026
+            </p>
+</div> 
+</div>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('namaCart')) || [];
+
+    function toggleCart() {
+        document.getElementById('cartDrawer').classList.toggle('active');
+        renderCart();
+    }
+
+    function updateAndSave() {
+        localStorage.setItem('namaCart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    function changeQty(index, amount) {
+        cart[index].quantity += amount;
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
+        updateAndSave();
+    }
+
+    function renderCart() {
+        const list = document.getElementById('cartItemsList');
+        const countBadge = document.getElementById('cart-count');
+        const totalDisp = document.getElementById('cartGrandTotal');
+        list.innerHTML = '';
+        let total = 0; let count = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal; count += item.quantity;
+            list.innerHTML += `
+                <div class="cart-item">
+                    <div><strong>${item.name}</strong><br>₱${item.price}</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                    <div style="text-align:right">₱${itemTotal}</div>
+                </div>`;
+        });
+        countBadge.innerText = count;
+        totalDisp.innerText = '₱' + total;
+    }
+    window.onload = renderCart;
+</script>
+
+<footer class="footer">
+    <div class="footer-col">
+        <h4>About Nama</h4>
+        <p>Providing fresh, nutrient-dense microgreens and edible flowers harvested daily in Metro Manila. We bring farm-fresh health directly to your table.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Our Products</h4>
+        <ul>
+            <li><a href="microgreens.html">Microgreens</a></li>
+            <li><a href="leafy.html">Leafy Herbs</a></li>
+            <li><a href="edible.html">Edible Flower</a></li>
+            <li><a href="bundle.html">Bundle Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Nama Microgreens. All Rights Reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

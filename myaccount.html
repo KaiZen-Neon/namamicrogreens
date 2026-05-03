@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nama Microgreens</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f9f9f9; margin: 0; }
+        .dashboard-wrapper { display: flex; }
+        nav.sidebar { width: 250px; background: #fff; height: calc(100vh - 70px); border-right: 1px solid #ddd; padding: 20px; }
+        nav.sidebar h2 { font-size: 1.1rem; border-bottom: 2px solid #82a45d; padding-bottom: 10px; }
+        nav.sidebar ul { list-style: none; padding: 0; }
+        nav.sidebar li { padding: 12px 0; border-bottom: 1px solid #eee; cursor: pointer; color: #555; }
+        nav.sidebar li:hover { color: #000; font-weight: bold; }
+        main { flex: 1; padding: 40px; }
+        .section { background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+        .status { padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; }
+        .processing { background: #fff4e5; color: #664d03; }
+        button.reorder { background: #82a45d; color: white; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; }
+        button.cancel-btn { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; margin-left: 5px; }
+        button.save { background: black; color: white; padding: 10px 20px; border: none; cursor: pointer; width: auto; }
+        input { width: 100%; padding: 10px; margin: 8px 0 20px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .show-pass-label { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #666; margin-bottom: 15px; cursor: pointer; }
+        .show-pass-label input { width: auto; margin: 0; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo-container"><img src="logo nama.jpg" alt="NAMA MICROGREENS"></div>
+  <div class="logo-text">MICROGREENS</div>
+  <nav>
+    <a href="javascript:void(0)" onclick="toggleCart()">🛒 Cart <span id="cart-count">0</span></a>
+    <a href="index.html" class="nav-noact">Home</a>
+    <a href="about.html" class="nav-noact">About</a>
+    <a href="products.html" class="nav-noact">Product</a>
+    <a href="order.html" class="nav-noact">Order</a>
+    <a href="contact.html" class="nav-noact">Contact</a>
+    <a href="myaccount.html" class="nav-active">My Account</a>
+    <a href="login.html" class="nav-noact">Login</a>
+  </nav>
+</header>
+
+<div class="dashboard-wrapper">
+    <nav class="sidebar">
+        <h2>Account Dashboard</h2>
+        <ul>
+            <li><p>Dashboard</p></li>
+            <li onclick="logout()" style="color: #7ba25c;">Logout</li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Hello, <span id="display-name">User</span>!</h1>
+
+        <div class="section">
+            <h3>Order History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Products</th>
+                        <th>Order Date</th>
+                        <th>Delivery Date</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="order-list"></tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>Personal Profile & Security</h3>
+            <form id="profile-form">
+                <label>Username (Custom ID)</label>
+                <input type="text" id="prof-username" placeholder="Create a unique username">
+                <label>Full Name</label>
+                <input type="text" id="prof-name" placeholder="Enter full name">
+                <label>Email Address</label>
+                <input type="email" id="prof-email" placeholder="Enter email address">
+                <label>Phone Number</label>
+                <input type="text" id="prof-phone" placeholder="0917-XXX-XXXX">
+                <label>Update Password</label>
+                <input type="password" id="prof-pass" placeholder="Enter new password">
+                 <label class="show-pass-label">
+                    <input type="checkbox" onclick="togglePass()"> Show Password</label>
+                <button type="button" class="save" onclick="updateProfile()">Update Profile</button>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    function togglePass() {
+        const passField = document.getElementById('prof-pass');
+        passField.type = (passField.type === "password") ? "text" : "password";
+    }
+
+    window.onload = function() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const userEmail = localStorage.getItem('username');
+
+        if (isLoggedIn !== 'true' || !userEmail) {
+            window.location.href = 'login.html'; 
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem('namaUsers')) || [];
+        let userData = users.find(u => u.email === userEmail);
+
+        if (userData) {
+            document.getElementById('display-name').innerText = userData.username || userData.fullName || userEmail;
+            document.getElementById('prof-email').value = userData.email;
+            document.getElementById('prof-username').value = userData.username || '';
+            document.getElementById('prof-name').value = userData.fullName || '';
+            document.getElementById('prof-phone').value = userData.phone || '';
+            document.getElementById('prof-pass').value = userData.password;
+            localStorage.setItem('fullName', userData.fullName || "");
+            localStorage.setItem('prof-phone', userData.phone || "");
+        }
+
+        renderOrderHistory();
+    };
+
+    // 3. Render Table
+    function renderOrderHistory() {
+        const history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+        const orderTable = document.getElementById('order-list');
+
+        if (history.length === 0) {
+            orderTable.innerHTML = "<tr><td colspan='6' style='text-align:center;'>No orders yet.</td></tr>";
+        } else {
+            orderTable.innerHTML = ""; 
+            history.forEach((order, index) => {
+                const itemDetails = order.products.map(p => `${p.quantity}x ${p.name}`).join(', ');
+                const oDate = order.orderDate || "N/A";
+                const dDate = order.deliveryDate || "N/A";
+
+                orderTable.innerHTML += `
+                    <tr>
+                        <td><strong>${itemDetails}</strong></td>
+                        <td>${oDate}</td>
+                        <td style="color: #7ba25c; font-weight: bold;">${dDate}</td>
+                        <td><span class="status processing">${order.status}</span></td>
+                        <td>${order.total}</td>
+                        <td>
+                            <button class="reorder" onclick="reorder(${index})">Reorder</button>
+                            <button class="cancel-btn" onclick="cancelOrder('${order.orderId}')">Cancel</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+    }
+    function updateProfile() {
+        const oldEmail = localStorage.getItem('username');
+        const newEmail = document.getElementById('prof-email').value.trim();
+        const newName = document.getElementById('prof-name').value.trim();
+        const newPhone = document.getElementById('prof-phone').value.trim();
+        const newUser = document.getElementById('prof-username').value.trim();
+        const newPass = document.getElementById('prof-pass').value.trim();
+
+        let users = JSON.parse(localStorage.getItem('namaUsers')) || [];
+        const userIndex = users.findIndex(u => u.email === oldEmail);
+
+        if (userIndex !== -1) {
+            if (newEmail !== oldEmail && users.find(u => u.email.toLowerCase() === newEmail.toLowerCase())) {
+                alert("Email already taken.");
+                return;
+            }
+
+            users[userIndex].email = newEmail;
+            users[userIndex].username = newUser;
+            users[userIndex].fullName = newName;
+            users[userIndex].phone = newPhone;
+            users[userIndex].password = newPass;
+
+            localStorage.setItem('namaUsers', JSON.stringify(users));
+            localStorage.setItem('username', newEmail);
+            localStorage.setItem('fullName', newName);    
+            localStorage.setItem('prof-phone', newPhone); 
+
+            document.getElementById('display-name').innerText = newUser || newName;
+            alert("Profile and Delivery info updated successfully!");
+        }
+    }
+
+    // 5. Order Actions
+    function cancelOrder(id) {
+        if (confirm("Are you sure you want to cancel this order?")) {
+            let history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            const filtered = history.filter(o => o.orderId !== id);
+            localStorage.setItem('orderHistory', JSON.stringify(filtered));
+            renderOrderHistory();
+        }
+    }
+
+    function reorder(index) {
+        const history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+        const items = history[index].products;
+        localStorage.setItem('namaCart', JSON.stringify(items));
+        alert("Items added back to cart! Redirecting to checkout...");
+        window.location.href = 'order.html';
+    }
+
+    function logout() {
+        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.removeItem('username');
+
+        localStorage.removeItem('fullName');
+        localStorage.removeItem('prof-phone');
+
+        window.location.href = 'login.html';
+    }
+</script>
+
+<footer class="footer">
+    <div class="footer-col">
+        <h4>About Nama</h4>
+        <p>Providing fresh, nutrient-dense microgreens and edible flowers harvested daily in Metro Manila. We bring farm-fresh health directly to your table.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Our Products</h4>
+        <ul>
+            <li><a href="microgreens.html">Microgreens</a></li>
+            <li><a href="leafy.html">Leafy Herbs</a></li>
+            <li><a href="edible.html">Edible Flower</a></li>
+            <li><a href="bundle.html">Bundle Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Nama Microgreens. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
